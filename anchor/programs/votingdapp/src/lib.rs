@@ -14,7 +14,7 @@ pub mod votingdapp {
       poll.poll_description = poll_description;
       poll.poll_start_time = poll_start_time;
       poll.poll_end_time = poll_end_time;
-      total_candidates = 0;
+      poll.total_candidates = 0;
       Ok(())
     }
 }
@@ -27,7 +27,8 @@ pub struct InitializePoll<'info> {
   #[account(
     init,
     payer = signer,
-    space = 8 + Poll::INIT_SPACE,
+    space = 1024,
+    // space = 8 + Poll::INIT_SPACE,
     seeds = [b"poll".as_ref()],
     // seeds = [poll_id.to_le_bytes().as_ref()],
     bump
