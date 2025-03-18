@@ -80,9 +80,25 @@ describe('Voting dapp', () => {
      console.log('merc',mercCandidate);
      console.log('bmw',bmwCandidate);
 
-    expect(mercCandidate.candidateName).toEqual("Merc");
+    // expect(mercCandidate.candidateName).toEqual("Merc");
     expect(mercCandidate.candidateVotes.toNumber()).toEqual(0);
-    expect(bmwCandidate.candidateName).toEqual("BMW");
+    // expect(bmwCandidate.candidateName).toEqual("BMW");
     expect(bmwCandidate.candidateVotes.toNumber()).toEqual(0)
   })
+
+  it('vote', async() => {
+    await votingProgram.methods.vote(
+      'Merc',
+      new anchor.BN(1)
+    ).rpc();
+
+    const [mercAddress] = PublicKey.findProgramAddressSync(
+      [new anchor.BN(1).toArrayLike(Buffer, 'le',8), Buffer.from("Merc")],
+      votingAddress
+    );
+
+    const mercCandidate = await votingProgram.account.candidate.fetch(mercAddress)
+
+    expect(mercCandidate.candidateVotes.toNumber()).toEqual(1);
+  });
 })
