@@ -15,6 +15,7 @@ pub mod votingdapp {
       poll.poll_start_time = poll_start_time;
       poll.poll_end_time = poll_end_time;
       poll.total_candidates = 0;
+
       Ok(())
     }
 
@@ -90,7 +91,7 @@ pub struct Candidate {
 }
 
 #[derive(Accounts)]
-// #instruction(poll_id : u64)
+#[instruction(poll_id : u64)]
 pub struct InitializePoll<'info> {
   #[account(mut)]
   pub signer: Signer<'info>,
@@ -99,8 +100,8 @@ pub struct InitializePoll<'info> {
     payer = signer,
     space = 1024,
     // space = 8 + Poll::INIT_SPACE,
-    seeds = [b"poll".as_ref()],
-    // seeds = [poll_id.to_le_bytes().as_ref()],
+    // seeds = [b"poll".as_ref()],
+    seeds = [poll_id.to_le_bytes().as_ref()],
     bump
   )]
   pub poll: Account<'info, Poll>,
