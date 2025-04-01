@@ -9,16 +9,18 @@ const votingAddress = new PublicKey("coUnmi3oBUtwtd9fjeAvSsJssXh5A5xyPbhpewyzRVF
 
 let context;
 let provider;
-let votingProgram: anchor.Program<Votingdapp>;
+// let votingProgram: anchor.Program<Votingdapp>;
+anchor.setProvider(anchor.AnchorProvider.env());
+let votingProgram = anchor.workspace.Votingdapp as Program<Votingdapp>;
 
 beforeAll(async () => {
-  context = await startAnchor("", [{name: "votingdapp", programId: votingAddress}], []);
-  provider = new BankrunProvider(context);
+//   context = await startAnchor("", [{name: "votingdapp", programId: votingAddress}], []);
+//   provider = new BankrunProvider(context);
 
-  votingProgram = new Program<Votingdapp>(
-   IDL,
-   provider
- );
+//   votingProgram = new Program<Votingdapp>(
+//    IDL,
+//    provider
+//  );
 });
 
 describe('Voting dapp', () => {
@@ -78,7 +80,7 @@ describe('Voting dapp', () => {
   it('vote', async() => {
     await votingProgram.methods.vote(
       'Merc',
-      new anchor.BN(1)
+      new anchor.BN(1) 
     ).rpc();
 
     await votingProgram.methods.vote(
