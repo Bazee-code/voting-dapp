@@ -65,7 +65,9 @@ describe('Voting dapp', () => {
     );
 
      const mercCandidate = await votingProgram.account.candidate.fetch(mercAddress)
+     console.log('mercCandidateBefore',mercCandidate)
      const bmwCandidate = await votingProgram.account.candidate.fetch(bmwAddress)
+     console.log('bmwCandidateBefore',bmwCandidate)
 
     expect(mercCandidate.candidateName).toEqual("Merc");
     expect(mercCandidate.candidateVotes.toNumber()).toEqual(0);
@@ -79,12 +81,26 @@ describe('Voting dapp', () => {
       new anchor.BN(1)
     ).rpc();
 
+    await votingProgram.methods.vote(
+      'BMW',
+      new anchor.BN(1)
+    ).rpc();
+
     const [mercAddress] = PublicKey.findProgramAddressSync(
       [new anchor.BN(1).toArrayLike(Buffer, 'le',8), Buffer.from("Merc")],
       votingAddress
     );
 
+    const [bmwAddress] = PublicKey.findProgramAddressSync(
+      [new anchor.BN(1).toArrayLike(Buffer, 'le', 8), Buffer.from("BMW")],
+      votingAddress
+    )
+
     const mercCandidate = await votingProgram.account.candidate.fetch(mercAddress)
+    console.log('mercCandidateAfter',mercCandidate)
+
+    const bmwCandidate = await votingProgram.account.candidate.fetch(bmwAddress)
+    console.log('bmwCandidateAfter',bmwCandidate)
 
     expect(mercCandidate.candidateVotes.toNumber()).toEqual(1);
   });
