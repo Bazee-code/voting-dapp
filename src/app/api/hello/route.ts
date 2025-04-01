@@ -19,12 +19,12 @@ export async function GET(request: Request) {
         {
           label : "Vote for C class",
           href : "/api/hello?candidate=cclass",
-          // type : "external-link"
+          type : "external-link"
         },
         {
           label : "Vote for S class",
           href : "/api/hello?candidate=sclass",
-          // type : "external-link"
+          type : "external-link"
         }
       ]
     }
@@ -67,7 +67,7 @@ export async function POST(request: Request){
     feePayer: voter,
     blockhash : blockhash.blockhash,
     lastValidBlockHeight : blockhash.lastValidBlockHeight
-  }).add(instruction);
+  }).add(await instruction);
 
   const response = await createPostResponse({
     fields : {
