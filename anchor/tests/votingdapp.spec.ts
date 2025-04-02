@@ -5,7 +5,7 @@ import {Votingdapp} from '../target/types/votingdapp'
 import { BankrunProvider, startAnchor } from 'anchor-bankrun'
 const IDL = require('../target/idl/votingdapp.json')
 
-const votingAddress = new PublicKey("coUnmi3oBUtwtd9fjeAvSsJssXh5A5xyPbhpewyzRVF")
+const votingAddress = new PublicKey("4qPs2V4qNKxrfWibYwMYLZzEVZn4ub2MsAUrtJykQuKx")
 
 let context;
 let provider;
